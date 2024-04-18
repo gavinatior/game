@@ -1,0 +1,93 @@
+// Define game states
+const gameState = {
+  START: "start",
+  EXPLORING: "exploring",
+  ENCOUNTER: "encounter",
+  BOSS_BATTLE: "boss_battle",
+  END: "end"
+};
+
+// Initialize game state and player's inventory
+let currentState = gameState.START;
+let playerInventory = [];
+
+// Function to start the game
+function startGame() {
+  console.log("Welcome to Quest for the Sorcerer's Tower!");
+  console.log("You are in the village of Eldoria. Your quest is to defeat the evil sorcerer Malifax and save the kingdom.");
+  currentState = gameState.EXPLORING;
+  explore();
+}
+
+// Function to handle exploration
+function explore() {
+  console.log("You are exploring the forest...");
+  // Random encounter chance
+  const encounterChance = Math.random();
+  if (encounterChance < 0.3) {
+    currentState = gameState.ENCOUNTER;
+    encounter();
+  } else {
+    console.log("You continue your journey.");
+    // Continue exploring or initiate boss battle
+    const decision = prompt("Do you want to continue exploring (type 'explore') or proceed to Malifax's tower (type 'tower')?");
+    if (decision.toLowerCase() === "explore") {
+      explore();
+    } else if (decision.toLowerCase() === "tower") {
+      currentState = gameState.BOSS_BATTLE;
+      bossBattle();
+    } else {
+      console.log("Invalid choice. Please type 'explore' or 'tower'.");
+      explore();
+    }
+  }
+}
+
+// Function to handle random encounters
+function encounter() {
+  console.log("You encounter a group of goblins blocking your path!");
+  const fightOrFlee = prompt("Do you want to fight or flee? (type 'fight' or 'flee')");
+  if (fightOrFlee.toLowerCase() === "fight") {
+    console.log("You engage in battle!");
+    // Code for handling the encounter (fighting) goes here
+    // For simplicity, let's assume the player always wins
+    console.log("You defeated the goblins!");
+  } else if (fightOrFlee.toLowerCase() === "flee") {
+    console.log("You manage to escape!");
+  } else {
+    console.log("Invalid choice. Please type 'fight' or 'flee'.");
+    encounter();
+  }
+  // After encounter, return to exploration
+  currentState = gameState.EXPLORING;
+  explore();
+}
+
+// Function to handle boss battle
+function bossBattle() {
+  console.log("You have reached Malifax's tower. Prepare for the final battle!");
+  const decision = prompt("Do you want to enter the tower and face Malifax (type 'enter') or flee (type 'flee')?");
+  if (decision.toLowerCase() === "enter") {
+    console.log("You enter the tower and confront Malifax!");
+    // Code for boss battle goes here
+    // For simplicity, let's assume the player always wins
+    console.log("You defeated Malifax and saved the kingdom! Congratulations, hero!");
+  } else if (decision.toLowerCase() === "flee") {
+    console.log("You wisely decide to flee from the overwhelming danger.");
+  } else {
+    console.log("Invalid choice. Please type 'enter' or 'flee'.");
+    bossBattle();
+  }
+  // After boss battle, game ends
+  currentState = gameState.END;
+  endGame();
+}
+
+// Function to end the game
+function endGame() {
+  console.log("The game has ended.");
+  // Code for displaying different endings based on game outcome goes here
+}
+
+// Start the game
+startGame();
